@@ -1,12 +1,12 @@
-const canvas = document.getElementById("signatureCanvas");
+  const canvas = document.getElementById("signatureCanvas");
         const context = canvas.getContext("2d");
         context.imageSmoothingEnabled = false;
         context.imageSmoothingQuality = "medium";
         let isMouseDown = false;
         let isTouch = false;
         let lastX, lastY,
-            undoStack = [],
-            redoStack = [];
+           $undo = [],
+            $redo = [];
         let state = -1;
 
         canvas.addEventListener("touchstart", handleTouchStart);
@@ -79,9 +79,9 @@ const canvas = document.getElementById("signatureCanvas");
 
         function handleUndo() {
             if (state > -1) {
-                const cState = undoStack.pop();
+                const cState =$undo.pop();
                 context.putImageData(cState, 0, 0);
-                redoStack.push(cState);
+                $redo.push(cState);
                 state--;
                 console.log(state);
             } else {
@@ -90,11 +90,11 @@ const canvas = document.getElementById("signatureCanvas");
         }
 
         function handleRedo() {
-            if (redoStack.length > 0) {
-                const cState = redoStack.pop();
+            if ($redo.length > 0) {
+                const cState = $redo.pop();
                 context.putImageData(cState, 0, 0);
-                undoStack.push(cState);
-                state = undoStack.length - 1;
+               $undo.push(cState);
+                state =$undo.length - 1;
             } else {
                 handleNoMoreRedo();
             }
@@ -102,9 +102,9 @@ const canvas = document.getElementById("signatureCanvas");
 
         function saveUndoState() {
             const cState = context.getImageData(0, 0, canvas.width, canvas.height, { willReadFrequently: true });
-            undoStack.push(cState);
-            redoStack = [];
-            state = undoStack.length - 1;
+           $undo.push(cState);
+            $redo = [];
+            state =$undo.length - 1;
         }
 
         function handleNoMoreUndo() {
@@ -159,4 +159,18 @@ const canvas = document.getElementById("signatureCanvas");
         }
         function rand() {
             return Math.floor(Math.random() * colorPick.length);
+        }
+        let inc = 0;
+        function lineIncrease() {
+            inc = inc + 1;
+            context.lineWidth = inc;
+            document.querySelector(".plus").textContent = inc;
+            document.querySelector(".minus").textContent = "-";
+        }
+
+        function lineDecrease() {
+            inc = inc - 1;
+            context.lineWidth = inc;
+            document.querySelector(".minus").textContent = inc;
+            document.querySelector(".plus").textContent = "+";
         }
