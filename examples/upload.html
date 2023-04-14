@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #000;
+      }
+
+      .nonny {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        overflow: auto;
+      }
+
+      #signatureCanvas {
+        width: 400px;
+        height: 200px;
+        display: block;
+        border: 1px solid #000;
+        cursor: crosshair;
+        background-color: #fff;
+      }
+
+      button {
+        padding: 8px;
+        border: none;
+        outline: none;
+        border-radius: 10px;
+      }
+
+      .action {
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+
+      button {
+        margin-top: 8px;
+      }
+
+      img {
+        background: #fff;
+      }
+
+      @media (max-width: 600px) {
+        .nonny {
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 404px) {
+        #signatureCanvas {
+          width: 100%;
+          height: 200px;
+          display: block;
+          border: 1px solid #000;
+          cursor: crosshair;
+          background-color: #fff;
+        }
+
+        img {
+          width: 100%;
+        }
+      }
+      form {
+        width: 100%;
+        height: 100%;
+        overflow: scroll;
+      }
+    </style>
+    <script src="../src/index.js"></script>
+  </head>
+
+  <body>
+    <form method="POST">
+      <input name="username" placeholder="your name" />
+      <input type="hidden" name="signature" id="signatureinput" value="" />
+      <div class="nonny" id="signature-container"></div>
+    </form>
+    <script>
+      const signature = new NonnySignature("#signature-container", true);
+      signature.onSave((image) => {
+        console.log(image);
+        document.querySelector("#signatureinput").value = image;
+      });
+    </script>
+  </body>
+</html>

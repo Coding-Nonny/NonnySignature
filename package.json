@@ -1,0 +1,20 @@
+{
+  "name": "signature_capture",
+  "version": "1.0.0",
+  "description": "signature_capture built with vanilla js features: signture drawing, increase and decrease font size, color change, backgroundcolor change, undo and redo, clear and save.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Coding-Nonny/signature_capture.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Coding-Nonny/signature_capture/issues"
+  },
+  "homepage": "https://github.com/Coding-Nonny/signature_capture#readme"
+}
