@@ -241,7 +241,7 @@ export default class NonnySignature {
     }
     return this.context.lineWidth;
   }
-/* ****** CALLBACK TO RETURN CONTEXT IMAGE DATA ****** */
+/* ****** CALLBACK FOR CONTEXT IMAGE DATA ****** */
   onSave(callback) {
     this.callback = (image) => callback(image);
   }
