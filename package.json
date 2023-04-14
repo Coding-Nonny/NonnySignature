@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "dev": "rollup -c --file lib/dev.js -w"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   "homepage": "https://github.com/Coding-Nonny/signature_capture#readme",
   "devDependencies": {
     "i": "^0.3.7",
+    "react": "^18.2.0",
     "rollup": "^3.20.2"
   }
 }

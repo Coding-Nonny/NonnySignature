@@ -26,9 +26,13 @@ export default class NonnySignature {
     sizeDown: null,
   };
   callback = null;
+  insertContent = null;
   constructor(containerName = "nonnysignature", insertContent = false) {
     this.container = document.querySelector(`${containerName}`);
-    if (insertContent) this.container.innerHTML = CONTENT;
+    this.insertContent = insertContent;
+  }
+   watch() {
+    if (this.insertContent) this.container.innerHTML = CONTENT;
     this.canvas = this.container.querySelector("canvas");
     this.context = this.canvas.getContext("2d");
     this.context.imageSmoothingEnabled = false;
@@ -44,8 +48,8 @@ export default class NonnySignature {
       localStorage.getItem("nonny_signature_bgColor") || "#ffffff";
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.addEventListeners();
-  }
-/* ****** Getting buutons ****** */
+   }
+/* ****** Getting buttons ****** */
   setUpButtons() {
     return {
       clear: this.container.querySelector(".nonny-clear"),
