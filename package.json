@@ -1,7 +1,7 @@
 {
-  "name": "SignatureCapture",
+  "name": "signaturecapture",
   "version": "1.0.0",
-  "description": "signature_capture built with vanilla js features: signture drawing, increase and decrease font size, color change, backgroundcolor change, undo and redo, clear and save.",
+  "description": "signature capture built with love by coding-nonny and codad5: signture drawing, increase and decrease font size, color change, backgroundcolor change, undo and redo, clear and save.",
   "main": "src/index.js",
   "type": "module",
   "scripts": {
