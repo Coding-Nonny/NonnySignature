@@ -30,6 +30,7 @@ export default class NonnySignature {
   constructor(containerName = "nonnysignature", insertContent = false) {
     this.container = document.querySelector(`${containerName}`);
     this.insertContent = insertContent;
+    this.watch();
   }
    watch() {
     if (this.insertContent) this.container.innerHTML = CONTENT;
