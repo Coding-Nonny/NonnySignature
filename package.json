@@ -1,5 +1,5 @@
 {
-  "name": "signaturecapture",
+  "name": "SignatureCapture",
   "version": "1.0.0",
   "description": "signature capture built with love by coding-nonny and codad5: signture drawing, increase and decrease font size, color change, backgroundcolor change, undo and redo, clear and save.",
   "main": "src/index.js",
