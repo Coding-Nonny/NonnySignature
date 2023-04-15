@@ -1,5 +1,5 @@
 {
-  "name": "SignatureCapture",
+  "name": "NonnySignature",
   "version": "1.0.0",
   "description": "signature_capture built with vanilla js features: signture drawing, increase and decrease font size, color change, backgroundcolor change, undo and redo, clear and save.",
   "main": "src/index.js",
