@@ -39,15 +39,19 @@ export default class NonnySignature {
     this.context.imageSmoothingEnabled = false;
     this.context.imageSmoothingQuality = "medium";
     this.buttons = this.setUpButtons();
-    this.buttons.color.value =
+    if(this.buttons.color !== null){
+      this.buttons.color.value =
       localStorage.getItem("nonny_signature_color") || "#000000";
     this.context.strokeStyle =
       localStorage.getItem("nonny_signature_color") || "#000000";
-    this.buttons.bgColor.value =
+    }
+    if(this.buttons.bgColor !== null){
+      this.buttons.bgColor.value =
       localStorage.getItem("nonny_signature_bgColor") || "#ffffff";
     this.context.fillStyle =
       localStorage.getItem("nonny_signature_bgColor") || "#ffffff";
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    }
     this.addEventListeners();
    }
 /* ****** Getting buttons ****** */
@@ -70,29 +74,43 @@ export default class NonnySignature {
   }
   /* ****** ADDING EVENT LISTENERS TO BUTTONS ****** */
   setUpButtonsListener() {
-    this.buttons.clear.addEventListener("click", () => {
+    if(this.buttons.clear !== null)
+    this.buttons.clear.addEventListener("click", (e) => {
+      e.preventDefault();
       this.clearCanvas();
     });
-    this.buttons.save.addEventListener("click", () => {
+    if(this.buttons.save !== null)
+    this.buttons.save.addEventListener("click", (e) => {
+      e.preventDefault();
       this.save();
     });
-    this.buttons.undo.addEventListener("click", () => {
+    if(this.buttons.undo !== null)
+    this.buttons.undo.addEventListener("click", (e) => {
+      e.preventDefault();
       this.undo();
       console.log(this.undo());
     });
-    this.buttons.redo.addEventListener("click", () => {
+    if(this.buttons.redo !== null)
+    this.buttons.redo.addEventListener("click", (e) => {
+      e.preventDefault();
       this.redo();
     });
+    if(this.buttons.color !== null)
     this.buttons.color.addEventListener("change", (e) => {
       this.changeColor(e.target.value);
     });
+    if(this.buttons.bgColor !== null)
     this.buttons.bgColor.addEventListener("change", (e) => {
       this.changeBgColor(e.target.value);
     });
-    this.buttons.sizeUp.addEventListener("click", () => {
+    if(this.buttons.sizeUp !== null)
+    this.buttons.sizeUp.addEventListener("click", (e) => {
+      e.preventDefault();
       this.changeSize("+");
     });
-    this.buttons.sizeDown.addEventListener("click", () => {
+    if(this.buttons.sizeDown !== null)
+    this.buttons.sizeDown.addEventListener("click", (e) => {
+      e.preventDefault();
       this.changeSize("-");
     });
   }
