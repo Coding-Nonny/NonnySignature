@@ -30,31 +30,31 @@ export default class NonnySignature {
   constructor(containerName = "nonnysignature", insertContent = false) {
     this.container = document.querySelector(`${containerName}`);
     this.insertContent = insertContent;
-    this.watch();
+    //this.watch();
   }
-   watch() {
+  watch() {
     if (this.insertContent) this.container.innerHTML = CONTENT;
     this.canvas = this.container.querySelector("canvas");
     this.context = this.canvas.getContext("2d");
     this.context.imageSmoothingEnabled = false;
     this.context.imageSmoothingQuality = "medium";
     this.buttons = this.setUpButtons();
-    if(this.buttons.color !== null){
+    if (this.buttons.color !== null) {
       this.buttons.color.value =
-      localStorage.getItem("nonny_signature_color") || "#000000";
-    this.context.strokeStyle =
-      localStorage.getItem("nonny_signature_color") || "#000000";
+        localStorage.getItem("nonny_signature_color") || "#000000";
+      this.context.strokeStyle =
+        localStorage.getItem("nonny_signature_color") || "#000000";
     }
-    if(this.buttons.bgColor !== null){
+    if (this.buttons.bgColor !== null) {
       this.buttons.bgColor.value =
-      localStorage.getItem("nonny_signature_bgColor") || "#ffffff";
-    this.context.fillStyle =
-      localStorage.getItem("nonny_signature_bgColor") || "#ffffff";
-    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        localStorage.getItem("nonny_signature_bgColor") || "#ffffff";
+      this.context.fillStyle =
+        localStorage.getItem("nonny_signature_bgColor") || "#ffffff";
+      this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
     this.addEventListeners();
-   }
-/* ****** Getting buttons ****** */
+  }
+  /* ****** Getting buttons ****** */
   setUpButtons() {
     return {
       clear: this.container.querySelector(".nonny-clear"),
@@ -67,49 +67,41 @@ export default class NonnySignature {
       sizeDown: this.container.querySelector(".nonny-sizedown"),
     };
   }
-/* ****** THIS METHOD CALLS CANVAS LISTENER AND BUTTON LISTENERS. THIS METHOD IS CALLED IN THE CONSTRUCTOR ****** */
+  /* ****** THIS METHOD CALLS CANVAS LISTENER AND BUTTON LISTENERS. THIS METHOD IS CALLED IN THE CONSTRUCTOR ****** */
   addEventListeners() {
     this.setUpCanvasListeners();
     this.setUpButtonsListener();
   }
   /* ****** ADDING EVENT LISTENERS TO BUTTONS ****** */
   setUpButtonsListener() {
-    if(this.buttons.clear !== null)
-    this.buttons.clear.addEventListener("click", (e) => {
+    this.buttons.clear?.addEventListener("click", (e) => {
       e.preventDefault();
       this.clearCanvas();
     });
-    if(this.buttons.save !== null)
-    this.buttons.save.addEventListener("click", (e) => {
+    this.buttons.save?.addEventListener("click", (e) => {
       e.preventDefault();
       this.save();
     });
-    if(this.buttons.undo !== null)
-    this.buttons.undo.addEventListener("click", (e) => {
+    this.buttons.undo?.addEventListener("click", (e) => {
       e.preventDefault();
       this.undo();
       console.log(this.undo());
     });
-    if(this.buttons.redo !== null)
-    this.buttons.redo.addEventListener("click", (e) => {
+    this.buttons.redo?.addEventListener("click", (e) => {
       e.preventDefault();
       this.redo();
     });
-    if(this.buttons.color !== null)
-    this.buttons.color.addEventListener("change", (e) => {
+    this.buttons.color?.addEventListener("change", (e) => {
       this.changeColor(e.target.value);
     });
-    if(this.buttons.bgColor !== null)
-    this.buttons.bgColor.addEventListener("change", (e) => {
+    this.buttons.bgColor?.addEventListener("change", (e) => {
       this.changeBgColor(e.target.value);
     });
-    if(this.buttons.sizeUp !== null)
-    this.buttons.sizeUp.addEventListener("click", (e) => {
+    this.buttons.sizeUp?.addEventListener("click", (e) => {
       e.preventDefault();
       this.changeSize("+");
     });
-    if(this.buttons.sizeDown !== null)
-    this.buttons.sizeDown.addEventListener("click", (e) => {
+    this.buttons.sizeDown?.addEventListener("click", (e) => {
       e.preventDefault();
       this.changeSize("-");
     });
@@ -124,7 +116,7 @@ export default class NonnySignature {
     this.canvas.addEventListener("mousemove", (e) => this.handleMouseMove(e));
     this.canvas.addEventListener("mouseup", (e) => this.handleMouseUp(e));
   }
-/* ****** HANDLE USER TOUCH EVENT ****** */
+  /* ****** HANDLE USER TOUCH EVENT ****** */
   handleTouchStart(e) {
     this.states.isTouch = true;
     let touch = e.touches[0];
@@ -132,7 +124,7 @@ export default class NonnySignature {
     this.states.lastY = touch.clientY - this.canvas.offsetTop;
     this.canvas.willReadFrequently = true;
   }
-/* ****** HANDLE USER TOUCH EVENT ****** */
+  /* ****** HANDLE USER TOUCH EVENT ****** */
   handleTouchMove(e) {
     if (!this.states.isTouch) return;
     let touch = e.touches[0];
@@ -146,7 +138,7 @@ export default class NonnySignature {
     this.states.lastX = currentX;
     this.states.lastY = currentY;
   }
-/* ****** HANDLE USER TOUCH EVENT ****** */
+  /* ****** HANDLE USER TOUCH EVENT ****** */
   handleTouchEnd() {
     this.states.isTouch = false;
     this.states.undo.push(
@@ -154,14 +146,14 @@ export default class NonnySignature {
     );
     this.states.redo = [];
   }
-/* ****** HANDLE USER MOUSE EVENT ****** */
+  /* ****** HANDLE USER MOUSE EVENT ****** */
   handleMouseDown(e) {
     this.states.isMouseDown = true;
     this.states.lastX = e.clientX - this.canvas.offsetLeft;
     this.states.lastY = e.clientY - this.canvas.offsetTop;
     this.canvas.willReadFrequently = true;
   }
-/* ****** HANDLE USER MOUSE EVENT ****** */
+  /* ****** HANDLE USER MOUSE EVENT ****** */
   handleMouseMove(e) {
     if (!this.states.isMouseDown) return;
     let currentX = e.clientX - this.canvas.offsetLeft;
@@ -173,7 +165,7 @@ export default class NonnySignature {
     this.states.lastX = currentX;
     this.states.lastY = currentY;
   }
-/* ****** HANDLE USER MOUSE EVENT ****** */
+  /* ****** HANDLE USER MOUSE EVENT ****** */
   handleMouseUp(e) {
     this.states.isMouseDown = false;
     this.states.undo.push(
@@ -181,7 +173,7 @@ export default class NonnySignature {
     );
     this.states.redo = [];
   }
-/* ****** UNDO METHOD ****** */
+  /* ****** UNDO METHOD ****** */
   undo() {
     if (this.states.undo.length > 0) {
       this.states.redo.push(this.states.undo.pop());
@@ -201,7 +193,7 @@ export default class NonnySignature {
     }
     return this.states.undo.length;
   }
-/* ****** REDO METHOD ****** */
+  /* ****** REDO METHOD ****** */
   redo() {
     if (this.states.redo.length > 0) {
       this.context.putImageData(
@@ -212,7 +204,7 @@ export default class NonnySignature {
       this.states.undo.push(this.states.redo.pop());
     }
   }
-/* ****** CLEAR METHOD ****** */
+  /* ****** CLEAR METHOD ****** */
   clearCanvas() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.states.undo = [];
@@ -221,7 +213,7 @@ export default class NonnySignature {
       localStorage.getItem("nonny_signature_bgColor") || "#ffffff";
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
   }
-/* ****** SAVE METHOD ****** */
+  /* ****** SAVE METHOD ****** */
   save() {
     if (this.callback) return this.callback(this.canvas.toDataURL());
     if (confirm("is the signature comfirmed by owner?")) {
@@ -234,18 +226,18 @@ export default class NonnySignature {
       document.body.removeChild(a);
     }
   }
-/* ****** CHANGE STROKE COLOR ****** */
+  /* ****** CHANGE STROKE COLOR ****** */
   changeColor(color) {
     localStorage.setItem("nonny_signature_color", color);
     this.context.strokeStyle = color;
   }
-/* ****** CHANGE CONTEXT COLOR****** */
+  /* ****** CHANGE CONTEXT COLOR****** */
   changeBgColor(color) {
     localStorage.setItem("nonny_signature_bgColor", color);
     this.context.fillStyle = color;
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
   }
-/* ****** SIZE INCREASE AND DECREASE ****** */
+  /* ****** SIZE INCREASE AND DECREASE ****** */
   changeSize(direction) {
     if (direction === "+") {
       this.size = this.size + 1;
@@ -264,7 +256,7 @@ export default class NonnySignature {
     }
     return this.context.lineWidth;
   }
-/* ****** CALLBACK FOR CONTEXT IMAGE DATA ****** */
+  /* ****** CALLBACK FOR CONTEXT IMAGE DATA ****** */
   onSave(callback) {
     this.callback = (image) => callback(image);
   }
