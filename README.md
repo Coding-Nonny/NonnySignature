@@ -1,13 +1,11 @@
-# Nonny Signature
+# NonnySignature
 
-NonnySignature is an easy to use Javascript based library that helps you manage users signatures in the front-end
+NonnySignature is an easy-to-use JavaScript-based library that helps you manage user signatures in the front-end. It provides a flexible solution for both React and vanilla JavaScript projects.
 
-## Usage
-### Installation:
+## Installation
+This library can be installed using either `NPM` or `CDN`.
 
-This library can be used both in `react.js` and `vanilla Javascript`
-
-- using npm
+- using NPM
 ```js
 npm i NonnySignature
 ```
@@ -15,53 +13,160 @@ npm i NonnySignature
 ```html
 <script src="https://" defer></script>
 ```
-### Importing NonnySignature:
+## Importing NonnySignature
 
 ```js
 import NonnySignature from 'Nonnysignature'
 ```
 #### Initialize your pad
-create a div tag with a class or id
-- The HTML example
+To initialize NonnySignature, you need to provide the class of the parent div that will hold the signature pad. You can use our default template or your own.
+- HTML
 ```html
 <body>
     <div class="mypad"></div>
 </body>
 ```
 
-- The Javascript code
+- JAVASCRIPT
 
 ```js
 const signaturePad = new NonnySignature(".mypad", false);
 ```
 
-## The constructor object
-- The first parameter given is the class or id of the parentDiv to hold the signature pad as for our case `.mypad` 
-- the second parameter uses our default template and automatically inserts it to the parentDiv if set to `false` else it uses your custom template. When using a custom template, make sure to add the canvas tag and controls inside the parentDiv.
+## Constructor Object
+- The first parameter is the class of the parent div that will hold the signature pad (in this case, `.mypad`).
+- The second parameter is a boolean that determines whether to use the default template (`false`) or your own (`true`).
 
-- Example
+### Using Our React Component:
 
-```html
-<body>
-    <div class="mypad">
-        <canvas width="400" height="200"></canvas>
-        <!-- this button clears the canvas -->
-        <button class="nonny-clear">clear</button>
-    </div>
-</body>
-```
-### Using our react component:
-
-To make it easy to use in your react development, we built a very flexible component to use and you can import it using 
+We have also provided a flexible React component that you can use in your React development. 
 
 ```js
 import SignaturePad from 'NonnySignature/react'
 
 export default function App(){
-    <SignaturePad id="mypad">
-    </SignaturePad>
+    <SignaturePad id="mypad"></SignaturePad>
 }
 ```
 
-#### The react component 
-- The id prop sets the id for the current signature Pad, as for our case `mypad`.
+#### React Component Props
+- The id prop sets the ID for the current signature pad (in this case, `mypad`).
+
+## Saving the Signature
+To save the signature image, you first need to add a Save button using the `.nonny-save` class name. You can either use our default template or your own.
+
+- HTML
+```html
+<div class="mypad">
+  <canvas width="400" height="200"></canvas>
+  <button class="nonny-save">Save</button>
+</div>
+```
+- REACT
+```jsx
+<SignaturePad id="mypad">
+  <canvas width="400" height="200"></canvas>
+  <button className="nonny-save">Save</button>
+</SignaturePad>
+```
+Then, set the `onSave` method or props.
+
+Setting The Method
+
+```js
+signaturePad.onSave((imageData) => window.location.replace(imageData.toImage('png', 1)));
+```
+Setting Props
+
+```js
+<SignaturePad id="mypad" onSave={(imageData) => window.location.replace(imageData.toImage('png', 1))}>
+  ...Your custom template
+</SignaturePad>
+```
+
+## Explaining the onSave Method
+- The `onSave` method takes a callback function as its parameter.
+- The callback function takes an ImageData object as its parameter.
+- The ImageData object has a few methods, including `toImage(imageType, quality)` and `toSvg()`.
+- The toImage method takes two arguments: imageType (currently supported types are `png`, `jpeg`, and `webp`) and quality (a number between `0` and `1`, with `0` being the poorest quality and `1` being the maximum quality).
+
+#### Note: If you click the save button without using the onSave method, the canvas will be downloaded as an image.
+
+
+### Additionally, the library also provides the following functionalities:
+
+- Clear button:
+ You can add a clear button to clear the signature pad using the class name `nonny-clear`. For example:
+```html
+<div class="mypad">
+  <canvas width="400" height="200"></canvas>
+  <button class="nonny-clear">Clear</button>
+</div>
+```
+- Size Up button: 
+You can add a button to increase the size of the stroke using the class name `nonny-sizeup`. For example:
+```html
+<div class="mypad">
+  <canvas width="400" height="200"></canvas>
+  <button class="nonny-sizeup">+</button>
+</div>
+```
+
+- Size Down button: 
+You can add a button to decrease the size of the stroke using the class name `nonny-sizedown`. For example:
+```html
+<div class="mypad">
+  <canvas width="400" height="200"></canvas>
+  <button class="nonny-sizedown">-</button>
+</div>
+```
+- Undo button: 
+You can add a button to undo the last stroke using the class name `nonny-undo`. For example:
+```html
+<div class="mypad">
+  <canvas width="400" height="200"></canvas>
+  <button class="nonny-undo">Undo</button>
+</div>
+```
+
+- Redo button: 
+You can add a button to redo the last stroke using the class name `nonny-redo`. For example:
+```html
+<div class="mypad">
+  <canvas width="400" height="200"></canvas>
+  <button class="nonny-redo">Redo</button>
+</div>
+```
+- Background color input: 
+You can add an input of type color to change the background color of the signature pad. The input should have the class name nonny-bgcolor and the default background color is white. For example:
+
+```html
+<div class="mypad">
+  <canvas width="400" height="200"></canvas>
+  <input type="color" class="nonny-bgcolor" value="#FFFFFF">
+</div>
+```
+
+- Stroke color input: 
+You can add an input of type color to change the stroke color of the signature pad. The input should have the class name nonny-strokecolor and default is black. For example:
+
+```html
+<div class="mypad">
+  <canvas width="400" height="200"></canvas>
+  <input type="color" class="nonny-color" value="#000000">
+</div>
+```
+- In REACT
+
+you can use the buttons like this
+```js
+<SignaturePad id="mypad">
+  <canvas width="400" height="200"></canvas>
+  <button className="nonny-save">Save</button>
+  <input type="color" className="nonny-color" value="#000000">
+</SignaturePad>
+```
+For working example, [click here](https://coding-nonny.github.io/NonnySignature/). or check the examples folder.
+
+
+If you encounter any issues or have any suggestions, please create an issue in the GitHub repository.
