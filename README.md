@@ -166,7 +166,9 @@ you can use the buttons like this
   <input type="color" className="nonny-color" value="#000000">
 </SignaturePad>
 ```
-For working example, [click here](https://coding-nonny.github.io/NonnySignature/). or check the examples folder.
+For working example, [click here](https://coding-nonny.github.io/NonnySignature/). 
+- Or check the example for handling double signature `client` and `management`
+[click here](https://github.com/Coding-Nonny/NonnySignature/blob/main/examples/2signatures.html)
 
 
 If you encounter any issues or have any suggestions, please create an issue in the GitHub repository.
