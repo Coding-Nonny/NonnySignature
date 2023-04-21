@@ -6,7 +6,6 @@ export default function SignaturePad({id, children, onSave }) {
     const signaturePad = new NonnySignature(`#${id}`, children?? false);
     signaturePad.onSave(onSave);
     console.log(document.querySelector(`#${id}`));
-    //signaturePad.watch();
   },[]);
 
   return <div id={id}>
