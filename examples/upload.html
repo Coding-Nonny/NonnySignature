@@ -94,7 +94,6 @@
         overflow: scroll;
       }
     </style>
-    <script src="../lib/NonnySignature.js"></script>
   </head>
 
   <body>
@@ -103,8 +102,9 @@
       <input type="hidden" name="signature" id="signatureinput" value="" />
       <div class="nonny" id="signature-container"></div>
     </form>
+    <script src="../lib/NonnySignature.js"></script>
     <script>
-      const signature = new NonnySignature("#signature-container", true);
+      const signature = new NonnySignature("#signature-container", false);
       signature.onSave((image) => {
         console.log(image);
         document.querySelector("#signatureinput").value = image;

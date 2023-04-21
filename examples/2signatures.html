@@ -92,8 +92,6 @@
         height: fit-content;
       }
     </style>
-
-    <script src="../lib/NonnySignature.js"></script>
   </head>
 
   <body>
@@ -128,23 +126,24 @@
         </div>
       </div>
     </form>
+    <script src="../lib/NonnySignature.js"></script>
     <script>
       const managerSign = new NonnySignature(
         "#manager-signature-container",
-        true
+        false
       );
       const clientSign = new NonnySignature(
         "#client-signature-container",
-        true
+        false
       );
       managerSign.onSave((image) => {
-        console.log(image);
-        document.querySelector("#manager-signature").src = image;
+        console.log(image.toImage("png"));
+        document.querySelector("#manager-signature").src = image.toImage("png");
       });
 
       clientSign.onSave((image) => {
-        console.log(image);
-        document.querySelector("#client-signature").src = image;
+        console.log(image.toImage("png"));
+        document.querySelector("#client-signature").src = image.toImage("png");
       });
     </script>
   </body>

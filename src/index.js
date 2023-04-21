@@ -1,4 +1,5 @@
 import CONTENT from "./template/default";
+import ImageManipulator from "./helpers/image-manipulator";
 export default class NonnySignature {
   container = null;
   canvas = null;
@@ -30,7 +31,7 @@ export default class NonnySignature {
   constructor(containerName = "nonnysignature", insertContent = false) {
     this.container = document.querySelector(`${containerName}`);
     this.insertContent = insertContent;
-    //this.watch();
+    this.watch();
   }
   watch() {
     if (!this.insertContent) this.container.innerHTML = CONTENT;
@@ -215,7 +216,7 @@ export default class NonnySignature {
   }
   /* ****** SAVE METHOD ****** */
   save() {
-    if (this.callback) return this.callback(this.canvas.toDataURL());
+    if (this.callback) return this.callback(new ImageManipulator(this.canvas));
     if (confirm("is the signature comfirmed by owner?")) {
       let image = this.canvas.toDataURL();
       let a = document.createElement("a");
