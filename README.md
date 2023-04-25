@@ -93,69 +93,17 @@ Setting Props
 #### Note: If you click the save button without using the onSave method, the canvas will be downloaded as an image.
 
 
-### Additionally, the library also provides the following functionalities:
+## Additionally, the library also provides the following functionalities:
 
-- Clear button:
- You can add a clear button to clear the signature pad using the class name `nonny-clear`. For example:
-```html
-<div class="mypad">
-  <canvas width="400" height="200"></canvas>
-  <button class="nonny-clear">Clear</button>
-</div>
-```
-- Size Up button: 
-You can add a button to increase the size of the stroke using the class name `nonny-sizeup`. For example:
-```html
-<div class="mypad">
-  <canvas width="400" height="200"></canvas>
-  <button class="nonny-sizeup">+</button>
-</div>
-```
-
-- Size Down button: 
-You can add a button to decrease the size of the stroke using the class name `nonny-sizedown`. For example:
-```html
-<div class="mypad">
-  <canvas width="400" height="200"></canvas>
-  <button class="nonny-sizedown">-</button>
-</div>
-```
-- Undo button: 
-You can add a button to undo the last stroke using the class name `nonny-undo`. For example:
-```html
-<div class="mypad">
-  <canvas width="400" height="200"></canvas>
-  <button class="nonny-undo">Undo</button>
-</div>
-```
-
-- Redo button: 
-You can add a button to redo the last stroke using the class name `nonny-redo`. For example:
-```html
-<div class="mypad">
-  <canvas width="400" height="200"></canvas>
-  <button class="nonny-redo">Redo</button>
-</div>
-```
-- Background color input: 
-You can add an input of type color to change the background color of the signature pad. The input should have the class name nonny-bgcolor and the default background color is white. For example:
-
-```html
-<div class="mypad">
-  <canvas width="400" height="200"></canvas>
-  <input type="color" class="nonny-bgcolor" value="#FFFFFF">
-</div>
-```
-
-- Stroke color input: 
-You can add an input of type color to change the stroke color of the signature pad. The input should have the class name nonny-strokecolor and default is black. For example:
-
-```html
-<div class="mypad">
-  <canvas width="400" height="200"></canvas>
-  <input type="color" class="nonny-color" value="#000000">
-</div>
-```
+| Name | Function |
+| -------- | -------- |
+| Clear button: |  The clear button is used to clear the canvas. You can add a clear button to the signature pad using the class name `nonny-clear`. |
+|  Size Up button: | This helps to increase the size of the canvas stroke. You can add a button to increase the size of the stroke using the class name `nonny-sizeup`. |
+|  Size Down button: | This helps to decrease the size of the canvas stroke. You can add a button to decrease the size of the stroke using the class name `nonny-sizedown`.
+|  Undo button: | This removes strokes from the canvas until none is left, you can recover strokes using the redo button. You can add an undo button using the class name `nonny-undo`.
+|  Redo button: | This retrieves strokes removed by the undo button. You can add a redo button using the class name `nonny-redo`.
+|  Background color input: | You can add an input of type color to change the background color of the signature pad. The input should have the class name `nonny-bgcolor` and the default background color is white `value="#FFFFFF"`.
+|  Stroke color input: | You can add an input of type color to change the stroke color of the signature pad. The input should have the class name `nonny-color` and default color is black `value="#000000"`.
 - In REACT
 
 you can use the buttons like this
