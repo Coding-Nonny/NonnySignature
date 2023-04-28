@@ -95,15 +95,15 @@ Setting Props
 
 ## Additionally, the library also provides the following functionalities:
 
-| Name | Function |
-| -------- | -------- |
-| Clear button: |  The clear button is used to clear the canvas. You can add a clear button to the signature pad using the class name `nonny-clear`. |
-|  Size Up button: | This helps to increase the size of the canvas stroke. You can add a button to increase the size of the stroke using the class name `nonny-sizeup`. |
-|  Size Down button: | This helps to decrease the size of the canvas stroke. You can add a button to decrease the size of the stroke using the class name `nonny-sizedown`.
-|  Undo button: | This removes strokes from the canvas until none is left, you can recover strokes using the redo button. You can add an undo button using the class name `nonny-undo`.
-|  Redo button: | This retrieves strokes removed by the undo button. You can add a redo button using the class name `nonny-redo`.
-|  Background color input: | You can add an input of type color to change the background color of the signature pad. The input should have the class name `nonny-bgcolor` and the default background color is white `value="#FFFFFF"`.
-|  Stroke color input: | You can add an input of type color to change the stroke color of the signature pad. The input should have the class name `nonny-color` and default color is black `value="#000000"`.
+| Name | Function | Class Name |
+| -------- | -------- | -------- |
+| Clear button: |  The clear button is used to clear the canvas. You can add a clear button to the signature pad using the class name `nonny-clear`. | nonny-clear |
+|  Size Up button: | This helps to increase the size of the canvas stroke. You can add a button to increase the size of the stroke using the class name `nonny-sizeup`. | nonny-sizeup |
+|  Size Down button: | This helps to decrease the size of the canvas stroke. You can add a button to decrease the size of the stroke using the class name `nonny-sizedown`. | nonny-sizedown |
+|  Undo button: | This removes strokes from the canvas until none is left, you can recover strokes using the redo button. You can add an undo button using the class name `nonny-undo`. | nonny-undo |
+|  Redo button: | This retrieves strokes removed by the undo button. You can add a redo button using the class name `nonny-redo`. | nonny-redo |
+|  Background color input: | You can add an input of type color to change the background color of the signature pad. The input should have the class name `nonny-bgcolor` and the default background color is white `value="#FFFFFF"`. | nonny-bgcolor |
+|  Stroke color input: | You can add an input of type color to change the stroke color of the signature pad. The input should have the class name `nonny-color` and default color is black `value="#000000"`. | nonny-color |
 - In REACT
 
 you can use the buttons like this
