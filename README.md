@@ -11,7 +11,7 @@ npm i NonnySignature
 ```
 - using CDN 
 ```html
-<script src="https://" defer></script>
+<script src="https://github.com/Coding-Nonny/NonnySignature/blob/main/lib/NonnySignature.js" defer></script>
 ```
 ## Importing NonnySignature
 
