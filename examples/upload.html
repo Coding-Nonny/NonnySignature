@@ -107,7 +107,7 @@
       const signature = new NonnySignature("#signature-container", false);
       signature.onSave((image) => {
         console.log(image);
-        document.querySelector("#signatureinput").value = image;
+        document.querySelector("#signatureinput").value = image.toImage('png',1);
       });
     </script>
   </body>
