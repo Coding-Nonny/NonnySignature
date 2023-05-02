@@ -7,7 +7,7 @@ This library can be installed using either `NPM` or `CDN`.
 
 - using NPM
 ```js
-npm i NonnySignature
+npm i nonnysignature
 ```
 - using CDN 
 ```html
@@ -16,7 +16,7 @@ npm i NonnySignature
 ## Importing NonnySignature
 
 ```js
-import NonnySignature from 'Nonnysignature'
+import NonnySignature from "../src/index";
 ```
 #### Initialize your pad
 To initialize NonnySignature, you need to provide the class of the parent div that will hold the signature pad. You can use our default template or your own.
@@ -42,7 +42,7 @@ const signaturePad = new NonnySignature(".mypad", false);
 We have also provided a flexible React component that you can use in your React development. 
 
 ```js
-import SignaturePad from 'NonnySignature/react'
+import SignaturePad from 'nonnysignature/react'
 
 export default function App(){
     <SignaturePad id="mypad"></SignaturePad>
