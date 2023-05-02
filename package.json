@@ -10,6 +10,10 @@
     "dev": "rollup -c --file lib/dev.js -w",
     "loader": "{ '.js': 'jsx' }"
   },
+  "engines": {
+  "node": "16.x",
+  "npm": "7.x"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Coding-Nonny/NonnySignature.git"
