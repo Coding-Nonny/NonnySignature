@@ -7,7 +7,7 @@ This library can be installed using either `NPM` or `CDN`.
 
 - using NPM
 ```js
-npm i NonnySignature
+npm i nonnysignature
 ```
 - using CDN 
 ```html
