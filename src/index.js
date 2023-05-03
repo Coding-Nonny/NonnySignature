@@ -86,7 +86,6 @@ export default class NonnySignature {
     this.buttons.undo?.addEventListener("click", (e) => {
       e.preventDefault();
       this.undo();
-      console.log(this.undo());
     });
     this.buttons.redo?.addEventListener("click", (e) => {
       e.preventDefault();
