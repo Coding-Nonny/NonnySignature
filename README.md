@@ -16,7 +16,7 @@ npm i nonnysignature
 ## Importing NonnySignature
 
 ```js
-import NonnySignature from "../src/index";
+import NonnySignature from "nonnysignature";
 ```
 #### Initialize your pad
 To initialize NonnySignature, you need to provide the class of the parent div that will hold the signature pad. You can use our default template or your own.
