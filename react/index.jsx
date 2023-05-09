@@ -5,7 +5,6 @@ export default function SignaturePad({id, children, onSave }) {
   useEffect(() => {
     const signaturePad = new NonnySignature(`#${id}`, children?? false);
     signaturePad.onSave(onSave);
-    console.log(document.querySelector(`#${id}`));
   },[]);
 
   return <div id={id}>
