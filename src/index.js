@@ -75,33 +75,33 @@ export default class NonnySignature {
   }
   /* ****** ADDING EVENT LISTENERS TO BUTTONS ****** */
   setUpButtonsListener() {
-    this.buttons.clear?.addEventListener("click", (e) => {
+    this.buttons.clear.addEventListener("click", (e) => {
       e.preventDefault();
       this.clearCanvas();
     });
-    this.buttons.save?.addEventListener("click", (e) => {
+    this.buttons.save.addEventListener("click", (e) => {
       e.preventDefault();
       this.save();
     });
-    this.buttons.undo?.addEventListener("click", (e) => {
+    this.buttons.undo.addEventListener("click", (e) => {
       e.preventDefault();
       this.undo();
     });
-    this.buttons.redo?.addEventListener("click", (e) => {
+    this.buttons.redo.addEventListener("click", (e) => {
       e.preventDefault();
       this.redo();
     });
-    this.buttons.color?.addEventListener("change", (e) => {
+    this.buttons.color.addEventListener("change", (e) => {
       this.changeColor(e.target.value);
     });
-    this.buttons.bgColor?.addEventListener("change", (e) => {
+    this.buttons.bgColor.addEventListener("change", (e) => {
       this.changeBgColor(e.target.value);
     });
-    this.buttons.sizeUp?.addEventListener("click", (e) => {
+    this.buttons.sizeUp.addEventListener("click", (e) => {
       e.preventDefault();
       this.changeSize("+");
     });
-    this.buttons.sizeDown?.addEventListener("click", (e) => {
+    this.buttons.sizeDown.addEventListener("click", (e) => {
       e.preventDefault();
       this.changeSize("-");
     });

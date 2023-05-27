@@ -102,13 +102,15 @@
         <input type="color" class="nonny-bgColor" value="#FFFFFF" />
         <button type="button" class="nonny-sizeup">+</button>
         <button type="button" class="nonny-sizedown">-</button>
+        <button type="button" class="onsave">onsave</button>
+        <img src="" alt="">
       </div>
     </div>
     <script src="lib/NonnySignature.js"></script>
     <script>
-      const signature = new NonnySignature("#signature", false);
+      const signature = new NonnySignature("#signature", true);
       signature.watch();
-      signature.changeBgColor("yellow");
+      signature.onSave((img) => document.querySelector("img").src = img.toSvg());
     </script>
   </body>
 </html>
