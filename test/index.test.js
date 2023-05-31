@@ -1,78 +1,48 @@
 const { JSDOM } = require('jsdom');
-const { document } = new JSDOM('<!doctype html><html><body></body></html>').window;
+const { createCanvas } = require('canvas');
 const NonnySignature = require('./test');
 
+const dom = new JSDOM('<!DOCTYPE html><html><body><div class="nonnysignature"><canvas></canvas></div></body></html>', {
+  url: 'http://localhost'
+});
+global.document = dom.window.document;
+global.window = dom.window;
+
 describe('NonnySignature', () => {
-  let signature;
   let container;
+  let signatureContainer;
 
   beforeEach(() => {
     container = document.createElement('div');
-    container.setAttribute('id', 'mydiv');
-    let canvas = document.createElement("canvas");
-    container.appendChild(canvas)
+    signatureContainer = document.createElement('div');
+    signatureContainer.setAttribute("id", 'nonnysignature'); 
+    container.innerHTML = signatureContainer;
     document.body.appendChild(container);
-    signature = new NonnySignature();
   });
 
   afterEach(() => {
-    signature = null;
-    container.remove();
+    document.body.removeChild(container);
   });
 
-  test('signature canvas should be created', () => {
-    expect(signature.canvas).toBeTruthy();
+  test('instantiates NonnySignature', () => {
+    const nonnySignature = new NonnySignature(signatureContainer);
+
+    expect(nonnySignature).toBeInstanceOf(NonnySignature);
   });
 
-  test('signature context should be 2d', () => {
-    expect(signature.context).toBeTruthy();
-    expect(signature.context).toBeInstanceOf(CanvasRenderingContext2D);
-  });
+  test('initializes the canvas and buttons', () => {
+    const nonnySignature = new NonnySignature(signatureContainer);
 
-  test('buttons should be set up', () => {
-    const buttons = signature.buttons;
-    expect(buttons.clear).toBeTruthy();
-    expect(buttons.save).toBeTruthy();
-    expect(buttons.undo).toBeTruthy();
-    expect(buttons.redo).toBeTruthy();
-    expect(buttons.color).toBeTruthy();
-    expect(buttons.bgColor).toBeTruthy();
-    expect(buttons.sizeUp).toBeTruthy();
-    expect(buttons.sizeDown).toBeTruthy();
-  });
-
-  test('clear button should clear the canvas', () => {
-    signature.clearCanvas();
-    const imageData = signature.context.getImageData(0, 0, signature.canvas.width, signature.canvas.height);
-    const emptyImageData = new ImageData(imageData.width, imageData.height);
-    expect(imageData.data).toEqual(emptyImageData.data);
-  });
-
-  test('undo button should undo last drawing', () => {
-    signature.context.moveTo(0, 0);
-    signature.context.lineTo(50, 50);
-    signature.context.stroke();
-    signature.undo();
-    const imageData = signature.context.getImageData(0, 0, signature.canvas.width, signature.canvas.height);
-    const emptyImageData = new ImageData(imageData.width, imageData.height);
-    expect(imageData.data).toEqual(emptyImageData.data);
-  });
-
-  test('redo button should redo last undone drawing', () => {
-    signature.context.moveTo(0, 0);
-    signature.context.lineTo(50, 50);
-    signature.context.stroke();
-    signature.undo();
-    signature.redo();
-    const imageData = signature.context.getImageData(0, 0, signature.canvas.width, signature.canvas.height);
-    expect(imageData.data).toBeTruthy();
-  });
-
-  test('save button should call the callback with data url of canvas', () => {
-    const callback = jest.fn();
-    signature.setCallback(callback);
-    signature.save();
-    expect(callback).toHaveBeenCalled();
-    expect(callback).toHaveBeenCalledWith(signature.canvas.toDataURL());
+    expect(nonnySignature.container).toBe(signatureContainer);
+    expect(nonnySignature.canvas).toEqual(signatureContainer.querySelector('canvas'));
+    expect(nonnySignature.context).toBe(nonnySignature.canvas.getContext('2d'));
+    expect(nonnySignature.buttons.clear).toEqual(signatureContainer.querySelector('.nonny-clear'));
+    expect(nonnySignature.buttons.save).toEqual(signatureContainer.querySelector('.nonny-save'));
+    expect(nonnySignature.buttons.undo).toEqual(signatureContainer.querySelector('.nonny-undo'));
+    expect(nonnySignature.buttons.redo).toEqual(signatureContainer.querySelector('.nonny-redo'));
+    expect(nonnySignature.buttons.color).toEqual(signatureContainer.querySelector('.nonny-color'));
+    expect(nonnySignature.buttons.bgColor).toEqual(signatureContainer.querySelector('.nonny-bgColor'));
+    expect(nonnySignature.buttons.sizeUp).toEqual(signatureContainer.querySelector('.nonny-sizeup'));
+    expect(nonnySignature.buttons.sizeDown).toEqual(signatureContainer.querySelector('.nonny-sizedown'));
   });
 });

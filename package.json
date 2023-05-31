@@ -30,6 +30,7 @@
     "rollup": "^3.20.2"
   },
   "dependencies": {
-    "jsdom": "^22.0.0"
+    "canvas": "^2.11.2",
+    "jsdom": "^16.6.0"
   }
 }

@@ -1,10 +1,9 @@
-const { JSDOM } = require('jsdom');
-const { document } = new JSDOM('<!doctype html><html><body></body></html>').window;
-module.exports = class NonnySignature {
-    container = null;
-    canvas = null;
-    size = 0;
-    CONTENT = `
+const { JSDOM } = require("jsdom");
+const { createCanvas } = require("canvas");
+module.exports = (function () {
+  "use strict";
+
+  const CONTENT = `
 <style>
 * {
   margin: 0;
@@ -99,6 +98,35 @@ img {
 <button type="button" class="nonny-sizeup">+</button>
 <button type="button" class="nonny-sizedown">-</button>
 </div>`;
+
+  class ImageManipulator {
+    canva = null;
+
+    constructor(canva) {
+      this.canva = canva;
+    }
+
+    toImage(imageType, quality = 0.5) {
+      const imgType = ["webp", "jpeg", "png"];
+      if (!imgType.includes(imageType.toLowerCase())) {
+        throw new Error("Invalid image type");
+      }
+      return this.canva.toDataURL(`image/${imageType}`, quality);
+    }
+
+    toSvg() {
+      const svgXml = new XMLSerializer().serializeToString(this.canva);
+      const svgDataUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(
+        svgXml
+      )}`;
+      return svgDataUrl;
+    }
+  }
+
+  class NonnySignature {
+    container = null;
+    canvas = null;
+    size = 0;
     context = null;
     /* ****** STATES ****** */
     states = {
@@ -123,31 +151,19 @@ img {
     };
     callback = null;
     insertContent = null;
-    constructor(containerName = document.createElement('div'), insertContent = false) {
-      this.container = document.querySelector(`${containerName}`);
+    constructor(containerName = "nonnysignature", insertContent = false) {
+      this.container = containerName;
       this.insertContent = insertContent;
       this.watch();
     }
     watch() {
-      if (!this.insertContent) this.container.innerHTML = this.CONTENT;
-      this.canvas = this.container.querySelector("canvas");
+      const { window } = new JSDOM();
+      const parser = new window.DOMParser();
+      const document = parser.parseFromString(CONTENT, "text/html");
+      if (!this.insertContent) this.container.innerHTML = CONTENT;
+      this.canvas = document.querySelector("canvas");
       this.context = this.canvas.getContext("2d");
-      this.context.imageSmoothingEnabled = false;
-      this.context.imageSmoothingQuality = "medium";
       this.buttons = this.setUpButtons();
-      if (this.buttons.color) {
-        this.buttons.color.value =
-          localStorage.getItem("nonny_signature_color") || "#000000";
-        this.context.strokeStyle =
-          localStorage.getItem("nonny_signature_color") || "#000000";
-      }
-      if (this.buttons.bgColor) {
-        this.buttons.bgColor.value =
-          localStorage.getItem("nonny_signature_bgColor") || "#ffffff";
-        this.context.fillStyle =
-          localStorage.getItem("nonny_signature_bgColor") || "#ffffff";
-        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-      }
       this.addEventListeners();
     }
     /* ****** Getting buttons ****** */
@@ -170,43 +186,47 @@ img {
     }
     /* ****** ADDING EVENT LISTENERS TO BUTTONS ****** */
     setUpButtonsListener() {
-      this.buttons.clear?.addEventListener("click", (e) => {
+      this.buttons.clear.addEventListener("click", (e) => {
         e.preventDefault();
         this.clearCanvas();
       });
-      this.buttons.save?.addEventListener("click", (e) => {
+      this.buttons.save.addEventListener("click", (e) => {
         e.preventDefault();
         this.save();
       });
-      this.buttons.undo?.addEventListener("click", (e) => {
+      this.buttons.undo.addEventListener("click", (e) => {
         e.preventDefault();
         this.undo();
       });
-      this.buttons.redo?.addEventListener("click", (e) => {
+      this.buttons.redo.addEventListener("click", (e) => {
         e.preventDefault();
         this.redo();
       });
-      this.buttons.color?.addEventListener("change", (e) => {
+      this.buttons.color.addEventListener("change", (e) => {
         this.changeColor(e.target.value);
       });
-      this.buttons.bgColor?.addEventListener("change", (e) => {
+      this.buttons.bgColor.addEventListener("change", (e) => {
         this.changeBgColor(e.target.value);
       });
-      this.buttons.sizeUp?.addEventListener("click", (e) => {
+      this.buttons.sizeUp.addEventListener("click", (e) => {
         e.preventDefault();
         this.changeSize("+");
       });
-      this.buttons.sizeDown?.addEventListener("click", (e) => {
+      this.buttons.sizeDown.addEventListener("click", (e) => {
         e.preventDefault();
         this.changeSize("-");
       });
     }
     /* ******ADDING EVENT LISTENERS TO CANVAS ELEMENT ****** */
     setUpCanvasListeners() {
-      this.canvas.addEventListener("touchstart", (e) => this.handleTouchStart(e));
+      this.canvas.addEventListener("touchstart", (e) =>
+        this.handleTouchStart(e)
+      );
       this.canvas.addEventListener("touchmove", (e) => this.handleTouchMove(e));
       this.canvas.addEventListener("touchend", (e) => this.handleTouchEnd(e));
-      this.canvas.addEventListener("touchcancel", (e) => this.handleTouchEnd(e));
+      this.canvas.addEventListener("touchcancel", (e) =>
+        this.handleTouchEnd(e)
+      );
       this.canvas.addEventListener("mousedown", (e) => this.handleMouseDown(e));
       this.canvas.addEventListener("mousemove", (e) => this.handleMouseMove(e));
       this.canvas.addEventListener("mouseup", (e) => this.handleMouseUp(e));
@@ -310,7 +330,8 @@ img {
     }
     /* ****** SAVE METHOD ****** */
     save() {
-      if (this.callback) return this.callback(new ImageManipulator(this.canvas));
+      if (this.callback)
+        return this.callback(new ImageManipulator(this.canvas));
       if (confirm("is the signature comfirmed by owner?")) {
         let image = this.canvas.toDataURL();
         let a = document.createElement("a");
@@ -356,4 +377,6 @@ img {
       this.callback = (image) => callback(image);
     }
   }
-  
+
+  return NonnySignature;
+})();
