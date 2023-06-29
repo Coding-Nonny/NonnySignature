@@ -109,7 +109,7 @@
     </div>
     <script src="lib/NonnySignature.js"></script>
     <script>
-      const signature = new NonnySignature("#signature");
+      const signature = new NonnySignature("#signature",true);
       signature.onSave((img) => document.querySelector("img").src = img.toSvg());
     </script>
   </body>
