@@ -53,33 +53,37 @@ export default function App(){
 - The id prop sets the ID for the current signature pad (in this case, `mypad`).
 
 ## Saving the Signature
-To save the signature image, you first need to add a Save button using the `.nonny-save` class name. You can either use our default template or your own.
+To save the signature image, you first need to add a Save button using the `.nonny-save-png` class name for png, `.nonny-save-svg` class name for svg. You can either use our default template or your own.
 
 - HTML
 ```html
 <div class="mypad">
   <canvas width="400" height="200"></canvas>
-  <button class="nonny-save">Save</button>
+  <button class="nonny-save-png">Save png</button>
+  <button class="nonny-save-svg">Save svg</button>
 </div>
 ```
 - REACT
 ```jsx
 <SignaturePad id="mypad">
   <canvas width="400" height="200"></canvas>
-  <button className="nonny-save">Save</button>
+  <button className="nonny-save-png">Save png</button>
+   <button className="nonny-save-svg">Save svg</button>
 </SignaturePad>
 ```
 Then, set the `onSave` method or props.
 
 Setting The Method
 
+- You can use `nonny-save-callback` class name on a button to initialize the onSave method.
+
 ```js
-signaturePad.onSave((imageData) => window.location.replace(imageData.toImage('png', 1)));
+signaturePad.onSave((imageData) => console.log(imageData.toImage('png', 1)));
 ```
 Setting Props
 
 ```js
-<SignaturePad id="mypad" onSave={(imageData) => window.location.replace(imageData.toImage('png', 1))}>
+<SignaturePad id="mypad" onSave={(imageData) => console.log(imageData.toImage('png', 1))}>
   ...Your custom template
 </SignaturePad>
 ```
@@ -89,6 +93,7 @@ Setting Props
 - The callback function takes an ImageData object as its parameter.
 - The ImageData object has a few methods, including `toImage(imageType, quality)` and `toSvg()`.
 - The toImage method takes two arguments: imageType (currently supported types are `png`, `jpeg`, and `webp`) and quality (a number between `0` and `1`, with `0` being the poorest quality and `1` being the maximum quality).
+- The `toSvg()` method returns signature as svg.
 
 #### Note: If you click the save button without using the onSave method, the canvas will be downloaded as an image.
 
@@ -110,7 +115,7 @@ you can use the buttons like this
 ```js
 <SignaturePad id="mypad">
   <canvas width="400" height="200"></canvas>
-  <button className="nonny-save">Save</button>
+  <button className="nonny-clear">clear</button>
   <input type="color" className="nonny-color" value="#000000">
 </SignaturePad>
 ```
