@@ -53,13 +53,23 @@ export default class NonnySignature {
         localStorage.getItem("nonny_signature_bgColor") || "#ffffff";
       this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
+    const lastSize = localStorage.getItem("pad-last-size");
+    const lastDir = localStorage.getItem("last-direction");
+    if (lastSize !== null && lastDir == "+") {
+      this.buttons.sizeUp.textContent = lastSize;
+    }
+    if (lastSize !== null && lastDir == "-") {
+      this.buttons.sizeDown.textContent = lastSize;
+    }
     this.addEventListeners();
   }
   /* ****** Getting buttons ****** */
   setUpButtons() {
     return {
       clear: this.container.querySelector(".nonny-clear"),
-      save: this.container.querySelector(".nonny-save"),
+      savePng: this.container.querySelector(".nonny-save-png"),
+      saveSvg: this.container.querySelector(".nonny-save-svg"),
+      saveCallback: this.container.querySelector(".nonny-save-callback"),
       undo: this.container.querySelector(".nonny-undo"),
       redo: this.container.querySelector(".nonny-redo"),
       color: this.container.querySelector(".nonny-color"),
@@ -79,9 +89,17 @@ export default class NonnySignature {
       e.preventDefault();
       this.clearCanvas();
     });
-    this.buttons.save.addEventListener("click", (e) => {
+    this.buttons.savePng.addEventListener("click", (e) => {
       e.preventDefault();
-      this.save();
+      this.savePng();
+    });
+    this.buttons.saveSvg.addEventListener("click", (e) => {
+      e.preventDefault();
+      this.saveSvg();
+    });
+    this.buttons.saveCallback.addEventListener("click", (e) => {
+      e.preventDefault();
+      this.returnCallback();
     });
     this.buttons.undo.addEventListener("click", (e) => {
       e.preventDefault();
@@ -214,13 +232,36 @@ export default class NonnySignature {
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
   }
   /* ****** SAVE METHOD ****** */
-  save() {
-    if (this.callback) return this.callback(new ImageManipulator(this.canvas));
+  savePng() {
     if (confirm("is the signature comfirmed by owner?")) {
       let image = this.canvas.toDataURL();
       let a = document.createElement("a");
       a.href = image;
       a.download = "nonny_signature.png";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  }
+
+  saveSvg() {
+    if (confirm("is the signature comfirmed by owner?")) {
+      let svgData = this.canvas.toDataURL("image/png");
+      let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
+      let svgImage = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "image"
+      );
+      svgImage.setAttribute("xlink:href", svgData);
+      svg.appendChild(svgImage);
+      const svgXml = new XMLSerializer().serializeToString(svg);
+      const svgDataUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(
+        svgXml
+      )}`;
+      let a = document.createElement("a");
+      a.href = svgDataUrl;
+      a.download = "nonny_signature.svg";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -239,24 +280,42 @@ export default class NonnySignature {
   }
   /* ****** SIZE INCREASE AND DECREASE ****** */
   changeSize(direction) {
+    const lastSize = localStorage.getItem("pad-last-size");
     if (direction === "+") {
-      this.size = this.size + 1;
+      if (lastSize !== null) {
+        this.buttons.sizeUp.textContent = lastSize;
+        this.size = lastSize;
+      }
+      this.size++;
       this.context.lineWidth = this.size;
       this.buttons.sizeUp.textContent = this.size;
       this.buttons.sizeDown.textContent = "-";
+      localStorage.setItem("pad-last-size", this.size);
+      localStorage.setItem("last-direction", "+");
     } else {
-      this.size = this.size - 1;
+      if (lastSize !== null) {
+        this.buttons.sizeDown.textContent = lastSize;
+        this.size = lastSize;
+      }
+      this.size--;
       this.context.lineWidth = this.size;
       this.buttons.sizeDown.textContent = this.size;
       this.buttons.sizeUp.textContent = "+";
+      localStorage.setItem("pad-last-size", this.size);
+      localStorage.setItem("last-direction", "-");
       if (this.size < 1) {
         this.buttons.sizeDown.textContent = this.context.lineWidth;
         this.size = 0;
+        localStorage.setItem("pad-last-size", this.size);
+        localStorage.setItem("last-direction", "-");
       }
     }
     return this.context.lineWidth;
   }
   /* ****** CALLBACK FOR CONTEXT IMAGE DATA ****** */
+  returnCallback() {
+    if (this.callback) return this.callback(new ImageManipulator(this.canvas));
+  }
   onSave(callback) {
     this.callback = (image) => callback(image);
   }

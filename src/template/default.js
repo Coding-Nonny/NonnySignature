@@ -85,13 +85,16 @@ img {
 <canvas id="signatureCanvas" width="400" height="200"></canvas>
 <div class="action">
 <button type="button" class="nonny-clear">Clear</button>
-<button type="button" class="nonny-save">Save</button>
+<button type="button" class="nonny-save-png">Save png</button>
+<button type="button" class="nonny-save-svg">Save svg</button>
+<button type="button" class="nonny-save-callback">Onsave callback</button>
 <button type="button" class="nonny-undo">Undo</button>
 <button type="button" class="nonny-redo">Redo</button>
 <input type="color" class="nonny-color" value="#000000" />
 <input type="color" class="nonny-bgColor" value="#FFFFFF" />
 <button type="button" class="nonny-sizeup">+</button>
 <button type="button" class="nonny-sizedown">-</button>
+<img src="" alt="">
 </div>`;
 
 export default CONTENT;

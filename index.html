@@ -95,7 +95,9 @@
       <canvas id="signatureCanvas" width="400" height="200"></canvas>
       <div class="action">
         <button type="button" class="nonny-clear">Clear</button>
-        <button type="button" class="nonny-save">Save</button>
+        <button type="button" class="nonny-save-png">Save png</button>
+        <button type="button" class="nonny-save-svg">Save svg</button>
+        <button type="button" class="nonny-save-callback">Onsave callback</button>
         <button type="button" class="nonny-undo">Undo</button>
         <button type="button" class="nonny-redo">Redo</button>
         <input type="color" class="nonny-color" value="#000000" />
@@ -107,8 +109,7 @@
     </div>
     <script src="lib/NonnySignature.js"></script>
     <script>
-      const signature = new NonnySignature("#signature", true);
-      signature.watch();
+      const signature = new NonnySignature("#signature");
       signature.onSave((img) => document.querySelector("img").src = img.toSvg());
     </script>
   </body>

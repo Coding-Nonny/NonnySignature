@@ -14,7 +14,13 @@ export default class ImageManipulator {
     }
   
     toSvg() {
-      const svgXml = new XMLSerializer().serializeToString(this.canva+".svg");
+      let svgData = this.canva.toDataURL('image/png');
+      let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('xmlns:xlink','http://www.w3.org/1999/xlink');
+      let svgImage = document.createElementNS("http://www.w3.org/2000/svg","image");
+      svgImage.setAttribute("xlink:href",svgData);
+      svg.appendChild(svgImage);
+      const svgXml = new XMLSerializer().serializeToString(svg);
       const svgDataUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgXml)}`;
       return svgDataUrl;
     }
